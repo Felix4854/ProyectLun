@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Docente</title>
+</head>
+<body>
+<h1>Editar Docente</h1>
+<form th:action="@{''}" method="post" th:object="${docente}" enctype="multipart/form-data">
+    <div>
+        <label for="nombre">Nombres</label>
+        <input type="text" id="nombre" th:field="*{nombre}">
+    </div>
+    <div>
+        <label for="apellidos">Apellidos</label>
+        <textarea id="apellidos" th:field="*{apellidos}"></textarea>
+    </div>
+    <div>
+        <label for="dni">Dni</label>
+        <input id="dni" th:field="*{dni}">
+    </div>
+    <div>
+        <label for="direccion">Direccion</label>
+        <input id="direccion" th:field="*{direccion}">
+    </div>
+    <div>
+        <label for="telefono">Telefono</label>
+        <input id="telefono" th:field="*{telefono}">
+    </div>
+
+    <div>
+        <label for="imagen">Imagen: [[*{foto}]]</label>
+        <input type="file" id="imagen" accept="image/*" th:field="*{imagen}">
+    </div>
+    <button>Guardar</button>
+</form>
+</body>
+</html>

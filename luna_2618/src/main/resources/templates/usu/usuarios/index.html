@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Administración de Usuarios</title>
+</head>
+<body>
+
+<div class="container mt-5" layout:fragment="contenido_dinamico">
+    <h3>Administración de Usuarios</h3>
+
+
+    <div class="text-end">
+        <a href="/usu/usuarios/nuevo" class="btn btn-primary">Nuevos Usuarios</a>
+    </div>
+
+    <form action="" class="my-3">
+        <div class="row">
+            <div class="col-md6 col-lg-4">
+                <div class="input-group">
+                    <input type="search" name="nombres" class="form-control" placeholder="Buscar nombre..." th:value="${param.nombres}">
+                    <button class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Nombre y Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="usuario : ${usuarios}" th:object="${usuario}">
+
+
+            <td>
+                <div th:text="*{nombreCompleto}" class="fw-bold"></div>
+                <p class="small" th:text="*{email}"></p>
+            </td>
+
+
+
+            <td class="text-end">
+
+                <div class="btn-group btn-group-sm">
+                    <a th:href="@{/usu/usuarios/editar/{id}(id=*{id})}" class="btn btn-primary" title="Editar">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <a href="#" class="btn btn-danger" title="Eliminar" onclick="eliminar(this)">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                    <form th:action="@{/usu/usuarios/eliminar/{id}(id=*{id})}" method="post" class="d-none"></form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+        <nav>
+            <div sd:pagination-summary="">info</div>
+            <ul class="pagination mt-3" sd:pagination="full"></ul>
+        </nav>
+    </div>
+
+</div>
+
+<div layout:fragment="scripts">
+    <script>
+        function eliminar(elemento){
+            var ok = confirm("¿Está seguro de eliminar el curso?");
+
+            if(ok){
+                elemento.nextElementSibling.submit();
+            }
+        }
+    </script>
+</div>
+
+
+
+</body>
+</html>

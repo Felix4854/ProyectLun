@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Curso</title>
+</head>
+<body>
+<h1>Editar Curso</h1>
+<form th:action="@{''}" method="post" th:object="${curso}" enctype="multipart/form-data">
+    <div>
+        <label for="titulo">TITULO</label>
+        <input type="text" id="titulo" th:field="*{titulo}">
+    </div>
+    <div>
+        <label for="descripcion">DESCRIPCIÓN</label>
+        <textarea id="descripcion" th:field="*{descripcion}" rows="3"></textarea>
+    </div>
+    <div>
+        <label for="precio">PRECIO</label>
+        <input type="number" id="precio" th:field="*{precio}">
+    </div>
+
+    <div>
+        <label for="imagen">Imagen: [[*{rutaImagen}]]</label>
+        <input type="file" id="imagen" accept="image/*" th:field="*{imagen}">
+    </div>
+    <button>Guardar</button>
+</form>
+</body>
+</html>
+</html>

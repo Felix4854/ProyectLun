@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{master.html}"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Administración de Cursos</title>
+</head>
+<body>
+
+<div class="container mt-5" layout:fragment="contenido_dinamico">
+    <h3>Administración de Cursos</h3>
+
+
+    <div class="text-end">
+        <a href="/admin/cursos/nuevo" class="btn btn-primary">Nuevo Curso</a>
+    </div>
+
+    <form action="" class="my-3">
+        <div class="row">
+            <div class="col-md6 col-lg-4">
+                <div class="input-group">
+                    <input type="search" name="titulo" class="form-control" placeholder="Buscar curso..." th:value="${param.titulo}">
+                    <button class="btn btn-primary"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th></th>
+            <th>TITULO</th>
+            <th>PRECIO</th>
+            <th>FECHA CREACIÓN</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="curso : ${cursos}" th:object="${curso}">
+            <td>
+                <a th:href="@{/media/{rutaImagen} (rutaImagen=*{rutaImagen})}" data-fancybox>
+                    <img th:src="@{/media/{rutaImagen} (rutaImagen=*{rutaImagen})}"
+                         th:if="*{rutaImagen ne null}"
+                         alt=""
+                         width="120"
+                         class="img-thumbnail"
+                    >
+                </a>
+            </td>
+
+            <td>
+                <div th:text="*{titulo}" class="fw-bold"></div>
+                <p class="small" th:text="*{descripcion}"></p>
+            </td>
+
+            <td>
+                [[*{#numbers.formatDecimal(precio, 3, 'POINT', '2', 'COMMA')}]]
+            </td>
+            <td>
+                [[*{#temporals.format(fechaCreacion, 'dd/MM/yyyy hh:mm a')}]]
+            </td>
+
+            <td class="text-end">
+
+                <div class="btn-group btn-group-sm">
+                    <a th:href="@{/admin/cursos/editar/{id}(id=*{id})}" class="btn btn-primary" title="Editar">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <a href="#" class="btn btn-danger" title="Eliminar" onclick="eliminar(this)">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                    <form th:action="@{/admin/cursos/eliminar/{id}(id=*{id})}" method="post" class="d-none"></form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+        <nav>
+            <div sd:pagination-summary="">info</div>
+            <ul class="pagination mt-3" sd:pagination="full"></ul>
+        </nav>
+    </div>
+
+</div>
+
+<div layout:fragment="scripts">
+    <script>
+        function eliminar(elemento){
+            var ok = confirm("¿Está seguro de eliminar el curso?");
+
+            if(ok){
+                elemento.nextElementSibling.submit();
+            }
+        }
+    </script>
+</div>
+
+
+
+</body>
+</html>
